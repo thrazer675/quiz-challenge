@@ -1,0 +1,27 @@
+h1 {
+    font-size: 15px;
+}
+
+#font {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#view-scores {
+    float: left;
+    color: rgb(184, 105, 184);
+}
+
+#view-scores {
+    box-shadow: 0px 0px 0px transparent;
+    background: white;
+    border: 0px solid transparent;
+    text-shadow: 0px 0px 0px transparent;
+}
+
+#timer {
+    float: right;
+}
+
+#launch {
+    text-align: center;
+}

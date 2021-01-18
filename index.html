@@ -3,9 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<body>
-    
+<body id="font">
+
+    <div id="container">
+
+    <header id="header">
+        <button id="view-scores" onclick="showHighScore()">View High Scores</button>
+        <h1 id="timer">Time Left: </h1>
+    </header>
+
+    <br>
+
+    <div id="launch">
+        <h2>Coding Quiz Challenge</h2>
+        <p>Try to answer the following code-related questions within the time limit.</p>
+        <p>Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+        <button id="startbtn">Start Quiz</button>
+    </div>
+
+    <div id="quiz">
+        <div id="questions"><p>QUESTIONS</p></div>
+            <button id="1" onclick="checkAnswer('1')">1. </button>
+            <button id="2" onclick="checkAnswer('2')">2. </button>
+            <button id="3" onclick="checkAnswer('3')">3. </button>
+            <button id="4" onclick="checkAnswer('4')">4. </button>
+        <div id="answer"></div>
+    </div>
+
+    <div id="final">
+        <div id="score"></div>
+        <h2 id="name">Enter your initials</h2>
+            <input type="text" size="30" id="input" name="input"/>
+            <button id="submit">Submit your score!</button>
+    </div>
+
+    <div id="hs-container">
+        <div id="hs-prompt"></div>
+            <div id="hs-text">
+                <h2>Initials</h2>
+                <h2>Score</h2>
+            </div>
+            <div id="hs-name"></div>
+            <div id="high-score"></div>
+    </div>
+
+   <div id="end">
+       <button id="replay" onclick="replayQuiz()">Play Again?</button>
+       <button id="erase" onclick="eraseScore()">Erase Highscores?</button>
+   </div>
+
+   </div>
+
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>
