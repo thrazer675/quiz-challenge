@@ -12,7 +12,7 @@
     <div id="container">
 
     <header id="header">
-        <button id="view-scores" onclick="showHighScore()">View High Scores</button>
+        <button id="view-scores" onclick="displayHighScore()">View High Scores</button>
         <h1 id="timer">Time Left: </h1>
     </header>
 
@@ -23,6 +23,10 @@
         <p>Try to answer the following code-related questions within the time limit.</p>
         <p>Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
         <button id="startbtn">Start Quiz</button>
+    </div>
+
+    <div id="question-result">
+        
     </div>
 
     <div id="quiz">
@@ -36,16 +40,15 @@
 
     <div id="final">
         <div id="score"></div>
-        <h2 id="name">Enter your initials</h2>
-            <input type="text" size="30" id="input" name="input"/>
-            <button id="submit">Submit your score!</button>
+        <h2 id="name">Enter your initials</h2>         
+        <input type="text" id="input" name="input" >
+        <button id="submit">Submit your score!</button>
     </div>
 
     <div id="hs-container">
         <div id="hs-prompt"></div>
             <div id="hs-text">
-                <h2>Initials</h2>
-                <h2>Score</h2>
+                <h2>High Scores</h2>
             </div>
             <div id="hs-name"></div>
             <div id="high-score"></div>
@@ -56,7 +59,7 @@
        <button id="erase" onclick="eraseScore()">Erase Highscores?</button>
    </div>
 
-   </div>
+   </div> 
 
     <script src="./assets/js/script.js"></script>
 </body>

@@ -1,3 +1,19 @@
+body {
+    background-color: rgb(144, 185, 209);
+}
+
+#launch button {
+    background-color: rgb(4, 52, 92);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
 h1 {
     font-size: 15px;
 }
@@ -7,15 +23,13 @@ h1 {
 }
 
 #view-scores {
-    float: left;
-    color: rgb(184, 105, 184);
-}
-
-#view-scores {
     box-shadow: 0px 0px 0px transparent;
-    background: white;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
+    float: left;
+    color: white;
+    border: none;
+    background-color: transparent;
 }
 
 #timer {
@@ -24,4 +38,20 @@ h1 {
 
 #launch {
     text-align: center;
+}
+
+#final {
+    display: none;
+}
+
+#quiz {
+    display: none;
+}
+
+#hs-container {
+    display: none;
+}
+
+#end {
+    display: none;
 }

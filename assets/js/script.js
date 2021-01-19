@@ -9,6 +9,7 @@ var button2 = document.getElementById("2");
 var button3 = document.getElementById("3");
 var button4 = document.getElementById("4");
 var answerEl = document.getElementById("answer");
+var questionResultEl = document.getElementById("question-result");
 var finalEl = document.getElementById("final");
 var scoreEl = document.getElementById("score");
 var hsInput = document.getElementById("input");
@@ -23,6 +24,7 @@ var timeLeft = 60;
 var timerInterval;
 var score = 0;
 var correct;
+const savedScoreStorageKey = "savedScores";
 
 // QUIZ QUESTIONS
 var questions = [{
@@ -89,10 +91,12 @@ function quizStart() {
         timeLeft--;
         quizTime.textContent = "Time Left: " + timeLeft;
 
-        if(timeLeft === 0) {
+        if(timeLeft <= 0) {
             clearInterval(timerInterval);
             displayScore();
+            console.log("hey we're here stop the timers.");
         }
+        
     }, 1000);
     quizDiv.style.display = "block";
 }
@@ -100,10 +104,32 @@ function quizStart() {
 // FUNCTION THAT DISPLAYS SCORE AT GAME END
 function displayScore() {
     quizDiv.style.display = "none";
-    finalEl.style.display = "flex";
+    finalEl.style.display = "block";
     clearInterval(timerInterval);
     hsInput.value = "";
-    scoreEl.innerHTML = "You got " + score + " out of " + questions.length + "!";
+    scoreEl.innerHTML = "You got " + score + " out of " + questions.length + " with " + timeLeft + " seconds left!";
+    startQuiz.style.display = "none";
+    hsContainer.style.display = "block";
+    hsPrompt.style.display = "block";
+    theEnd.style.display = "block";
+    questionResultEl.style.display = "none";
+
+    generateScores();
+}
+
+function displayHighScore() {
+    quizDiv.style.display = "none";
+    finalEl.style.display = "none";
+    clearInterval(timerInterval);
+    hsInput.value = "";
+    scoreEl.innerHTML = "You got " + score + " out of " + questions.length + " with " + timeLeft + " seconds left!";
+    startQuiz.style.display = "none";
+    hsContainer.style.display = "block";
+    hsPrompt.style.display = "none";
+    theEnd.style.display = "block";
+    questionResultEl.style.display = "none";
+
+    generateScores();
 }
 
 // SUBMIT BUTTON EVENT LISTENER AND LOCAL STORAGE
@@ -114,20 +140,20 @@ submitScore.addEventListener("click", function highScore() {
         return false;
     }
     else {
-        var savedScores = JSON.parse(localStorage.getItem("savedScores")) || [];
+        var savedScores = JSON.parse(localStorage.getItem(savedScoreStorageKey)) || [];
         var currentUser = hsInput.value.trim();
         var currentScore = {
             name: currentUser,
-            score: score
+            score: timeLeft
         };
 
         finalEl.style.display = "none";
-        hsContainer.style.display = "flex";
+        hsContainer.style.display = "block";
         hsPrompt.style.display = "block";
-        theEnd.style.display = "flex";
+        theEnd.style.display = "block";
 
         savedScores.push(currentScore);
-        localStorage.setItem("savedScores", JSON.stringify(savedScores));
+        localStorage.setItem(savedScoreStorageKey, JSON.stringify(savedScores));
         generateScores();
     }
 });
@@ -135,25 +161,20 @@ submitScore.addEventListener("click", function highScore() {
 function generateScores() {
     hsNameDisplay.innerHTML = "";
     highScore.innerHTML = "";
-    var highScores = JSON.parse(localStorage.getItem("savedHighScores")) || [];
+    var highScores = JSON.parse(localStorage.getItem(savedScoreStorageKey)) || [];
+    var newName = document.createElement("ul");
+    var newScore = document.createElement("ul");
+    console.log("high scores", highScores);
     for (i = 0; i < highScores.length; i++) {
-        var newName = document.createElement("li");
-        var newScore = document.createElement("li");
-        newName.textContent = highScores[i].name;
-        newScore.textContent = highScores[i].score;
-        hsNameDisplay.appendChild(newName);
-        highScore.appendChild(newScore);
+        var nameScoreItem = document.createElement("li");
+        nameScoreItem.innerHTML = highScores[i].name + " - " + highScores[i].score;
+        newName.appendChild(nameScoreItem);
+
     }
-}
 
-function displayScore() {
-    startQuiz.style.display = "none";
-    finalEl.style.display = "none";
-    hsContainer.style.display = "flex";
-    hsPrompt.style.display = "block";
-    theEnd.style.display = "flex";
+    hsNameDisplay.appendChild(newName);
+    highScore.appendChild(newScore);
 
-    generateScores();
 }
 
 // CLEARS SCORES/NAMES FROM LOCAL STORAGE
@@ -167,7 +188,9 @@ function eraseScore() {
 function resetQuiz() {
     hsContainer.style.display = "none";
     finalEl.style.display = "none";
-    startQuiz.style.display = "flex";
+    startQuiz.style.display = "block";
+    theEnd.style.display = "none";
+    questionResultEl.style.display = "none";
     timeLeft = 60;
     score = 0;
     currentQuestionIndex = 0;
@@ -179,18 +202,25 @@ function checkAnswer(answer) {
 
     if (answer === correct && currentQuestionIndex !== finalQuestionIndex) {
         score++;
-        alert("Correct!");
+        // alert("Correct!");
+        displayQuestionResult("correct");
         currentQuestionIndex++;
         generateQuestions();
     }
     else if (answer !== correct && currentQuestionIndex !== finalQuestionIndex) {
-        alert("Wrong!");
+        // alert("Wrong!");
+        displayQuestionResult("wrong");
+        timeLeft = timeLeft - 10;
         currentQuestionIndex++;
-        generateQuestions;
+        generateQuestions();
     }
     else {
         displayScore();
     }
 }
 
+function displayQuestionResult(result) {
+    questionResultEl.innerHTML = result;
+    questionResultEl.style.display = "block";
+}
 startBtn.addEventListener("click", quizStart);
